@@ -1,0 +1,50 @@
+:root {
+    --primary-color: #D96AA7;
+    --secondary-color: #422C73;
+    --complimentary-color: #88BFB5;
+    --contrast-color: #F2E527;
+    --light-color: #D2A9D9;
+}
+
+.sidebar {
+    width: 10%;
+    height: 100vh;
+}
+
+.sidebar .container {
+    background: #191919;
+    min-height: 100%;
+    font-family: Montserrat, sans-serif;
+}
+
+.sidebar nav a,
+.sidebar nav h1 {
+    font-size: 2vh;
+    color: #fff;
+    text-decoration: none;
+    padding: 20px;
+    text-align: center;
+    background-color: transparent;
+}
+
+.sidebar nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100vh;
+    width: 10%;
+    background: var(--secondary-color);
+}
+
+#title {
+    font-size: 5vh;
+    color: #fff;
+    text-decoration: none;
+    padding: 20px;
+    text-align: center;
+    background-color: transparent;
+}

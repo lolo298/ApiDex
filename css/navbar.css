@@ -1,0 +1,64 @@
+.dark-mode .header {
+    background-color: var(--dark-header);
+}
+
+.light-mode .header {
+    background-color: var(--light-header);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    z-index: 50;
+}
+
+header>h1 {
+    z-index: 51;
+    flex: 0 0;
+    min-width: max-content;
+    height: 100%;
+    padding: 0.25em 0.5em;
+
+}
+
+.main-navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: max-content;
+}
+
+.main-navbar a {
+    text-decoration: none;
+    padding: 1.8em 1em;
+    font-size: 1.25em;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.light-mode .main-navbar a:hover {
+    background-color: rgb(189, 189, 189);
+    transition: background-color 0.4s ease-in-out;
+}
+
+
+.dark-mode .main-navbar a:hover {
+    background-color: rgb(121, 121, 121);
+    transition: background-color 0.4s ease-in-out;
+}
+
+.header.sep {
+    padding: 0 3%;
+}
+
+.header .toggle {
+    margin: 2%;
+}
+
+
+#theme-icon {
+    width: 3vh;
+    height: 3vh;
+    margin-right: 2vh;
+}

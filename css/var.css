@@ -1,0 +1,10 @@
+:root {
+    --light-primary: #f3f3f3;
+    --dark-primary: #333;
+    --light-secondary: #8a8a8a;
+    --dark-secondary: rgb(66, 66, 66);
+    --light-text: #333;
+    --dark-text: #fafafa;
+    --light-header: #58585833;
+    --dark-header: rgba(143, 143, 143, 0.123);
+}

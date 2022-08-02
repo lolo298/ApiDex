@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/var.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/switch.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root" class="light-mode">
+    <div class="header">
+      <header>
+        <h1 class="void"></h1>
+        <nav class="main-navbar">
+          <a href="#">Pokemons</a>
+          <a href="#">Moves</a>
+          <a href="#">Locations</a>
+          <a href="#">Items</a>
+          <a href="#">CT/CS</a>
+          <a href="#">Contests</a>
+          <a href="#">Berries</a>
+          <div class="sep"></div>
+          <div class="toggle">
+            <label class="switch">
+              <input type="checkbox" onclick="theme(this)" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <img src="assets/sun.png" alt="sun" id="theme-icon" />
+        </nav>
+      </header>
+    </div>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <nav>
+          <h1>ApiDex</h1>
+        </nav>
+      </div>
+      <ul class="list">
+      </ul>
+      <div class="pkmn-container">
+      </div>
+
+
+
+
+
+      <template>
+        <div class="sprite-container">
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png" alt="Unknown" class="void sprite">
+
+          <div class="name">Unknown</div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+
+  <script src="js/functions.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
