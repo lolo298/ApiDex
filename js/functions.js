@@ -3,6 +3,8 @@ headers.append("Content-Type", "application/json");
 headers.append("Accept", "application/json");
 headers.append("Access-Control-Allow-Origin", "http://apidex.localhost");
 
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
 let config = {
   method: "GET",
   mode: "cors",
@@ -55,6 +57,7 @@ async function setSideBar() {
     .catch(function (err) {
       console.log(err);
     });
+  await delay(10);
   let sidebar = document.querySelector(".sidebar").querySelector("nav");
   for (let i = 0; i < gen.count; i++) {
     let element = gen.results[i];
@@ -77,6 +80,7 @@ async function setPkmnList(url, id) {
     .catch(function (err) {
       console.log(err);
     });
+  await delay(10);
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
@@ -102,6 +106,7 @@ async function setPkmnList(url, id) {
         return res.json();
       })
       .then(function (data) {
+        delay(10);
         if (data.sprites.front_default != null) {
           sprite.src = data.sprites.front_default;
         } else {
