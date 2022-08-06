@@ -17,18 +17,36 @@ function theme(toggle) {
     icon.src = "./assets/img/moon.png";
     root.classList.add("dark-mode");
     root.classList.remove("light-mode");
-    console.log("dark mode");
+    sessionStorage.setItem("theme", "dark");
   } else {
     icon.src = "./assets/img/sun.png";
     root.classList.remove("dark-mode");
     root.classList.add("light-mode");
-    console.log("light mode");
+    sessionStorage.setItem("theme", "light");
+  }
+}
+function setTheme() {
+  let icon = document.getElementById("theme-icon");
+  let root = document.getElementById("root");
+  let toggle = document.getElementById("themeSwitch");
+  if (sessionStorage.getItem("theme") == "dark") {
+    toggle.checked = true;
+    root.classList.add("dark-mode");
+    root.classList.remove("light-mode");
+    icon.src = "./assets/img/moon.png";
+  } else {
+    toggle.checked = false;
+    root.classList.remove("dark-mode");
+    root.classList.add("light-mode");
+    icon.src = "./assets/img/sun.png";
   }
 }
 async function setup() {
   setSideBar();
   setPkmnList("https://pokeapi.co/api/v2/generation/1/");
+  setTheme();
 }
+
 async function setSideBar() {
   const gen = await fetch("https://pokeapi.co/api/v2/generation/", config)
     .then(function (res) {
