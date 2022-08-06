@@ -1,0 +1,21 @@
+body {
+    height: 200vh;
+    display: flex;
+}
+
+div {
+    width: 50%;
+    height: 150vh;
+    background-color: black;
+    display: inherit;
+    justify-content: flex-end;
+}
+
+section {
+    width: 50%;
+    height: 25vh;
+    background-color: red;
+    position: sticky;
+    top: 50vh;
+    left: 25vw;
+}
