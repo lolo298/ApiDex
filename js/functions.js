@@ -1,7 +1,12 @@
+let headers = new Headers();
+headers.append("Content-Type", "application/json");
+headers.append("Accept", "application/json");
+headers.append("Access-Control-Allow-Origin", "http://apidex.localhost");
+
 let config = {
   method: "GET",
   mode: "cors",
-  headers: new Headers({ "content-type": "application/json" }),
+  headers: headers,
   cache: "default",
 };
 
@@ -59,21 +64,32 @@ async function setPkmnList(url, id) {
 
   pkmnListContainer.innerHTML = "";
   pkmnList.pokemon_species.forEach(function (element) {
+    let id = getIdFromUrl(element.url);
+    element.url = id;
+    element.url = parseInt(element.url);
+  });
+  pkmnList.pokemon_species.sort(function (a, b) {
+    return a.url - b.url;
+  });
+  pkmnList.pokemon_species.forEach(function (element) {
     let clone = template.content.cloneNode(true);
     let sprite = clone.querySelector(".sprite");
     let name = clone.querySelector(".name");
     name.innerHTML = element.name;
     name.alt = element.name;
-    //console.log(element);
-    url = clearUrl(element.url);
-    let id = url.match(/(\d+)/)[0];
+    let id = element.url;
     url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const pkmn = fetch(url, config)
       .then(function (res) {
         return res.json();
       })
       .then(function (data) {
-        sprite.src = data.sprites.front_default;
+        if (data.sprites.front_default != null) {
+          sprite.src = data.sprites.front_default;
+        } else {
+          sprite.src =
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
+        }
       })
       .catch(function (err) {
         console.log(err);
@@ -83,8 +99,10 @@ async function setPkmnList(url, id) {
   });
 }
 
-function clearUrl(url) {
-  return url.replace("https://pokeapi.co/api/v2/", "");
+function getIdFromUrl(url) {
+  let tmp = url.replace("https://pokeapi.co/api/v2/", "");
+  let id = tmp.match(/(\d+)/)[0];
+  return id;
 }
 
 function romanize(num) {
@@ -156,4 +174,15 @@ async function getGenPkmn(gen) {
     .catch(function (err) {
       console.log(err);
     });
+}
+
+function GetSortOrder(prop) {
+  return function (a, b) {
+    if (a[prop] > b[prop]) {
+      return 1;
+    } else if (a[prop] < b[prop]) {
+      return -1;
+    }
+    return 0;
+  };
 }

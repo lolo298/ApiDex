@@ -6,9 +6,44 @@
     --light-color: #D2A9D9;
 }
 
-.sidebar {
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+.sidebar* {
+    scrollbar-width: auto;
+    scrollbar-color: #514766 #492a73;
+}
+
+/* Chrome, Edge, and Safari */
+.sidebar *::-webkit-scrollbar {
+    width: 17px;
+}
+
+.sidebar *::-webkit-scrollbar-track {
+    background: #492a73;
+}
+
+.sidebar *::-webkit-scrollbar-thumb {
+    background-color: #514766;
+    border-radius: 20px;
+    border: 4px solid #492a73;
+}
+
+.sideSep {
     width: 10%;
     height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 10%;
+    background: var(--secondary-color);
+    align-items: center;
 }
 
 .sidebar .container {
@@ -18,26 +53,28 @@
 }
 
 .sidebar nav a,
-.sidebar nav h1 {
+.sidebar h1 {
     font-size: 2vh;
     color: #fff;
     text-decoration: none;
     padding: 20px;
     text-align: center;
     background-color: transparent;
+    margin: 5vh 0;
 }
 
 .sidebar nav {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 0;
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
-    height: 100vh;
-    width: 10%;
-    background: var(--secondary-color);
+    justify-content: flex-start;
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: fill-available;
+
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: fill-available;
+    overflow: overlay;
 }
 
 #title {

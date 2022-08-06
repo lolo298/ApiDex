@@ -8,3 +8,11 @@
     --light-header: #58585833;
     --dark-header: rgba(143, 143, 143, 0.123);
 }
+
+.sidebar-wrapper {
+    --primary-color: #D96AA7;
+    --secondary-color: #422C73;
+    --complimentary-color: #88BFB5;
+    --contrast-color: #F2E527;
+    --light-color: #D2A9D9;
+}
