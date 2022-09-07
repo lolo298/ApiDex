@@ -9,7 +9,7 @@ let config = {
   method: "GET",
   mode: "cors",
   headers: headers,
-  cache: "default",
+  cache: "reload",
 };
 
 function theme(toggle) {

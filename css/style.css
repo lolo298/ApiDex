@@ -55,6 +55,12 @@ body {
     margin: 1%;
 }
 
+.sprite-container:hover {
+    transform: scale(1.2);
+    transition: all 0.4s ease-in-out;
+
+}
+
 .sprite-container .sprite {
     width: 80%;
     height: 80%;
