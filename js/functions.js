@@ -1,7 +1,7 @@
 let headers = new Headers();
 headers.append("Content-Type", "application/json");
 headers.append("Accept", "application/json");
-headers.append("Access-Control-Allow-Origin", "http://apidex.localhost");
+headers.append("Access-Control-Allow-Origin", "*");
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
