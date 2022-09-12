@@ -45,8 +45,9 @@ function setTheme() {
 }
 async function setup() {
   setSideBar();
-  setPkmnList("https://pokeapi.co/api/v2/generation/1/");
   setTheme();
+  await setPkmnList("https://pokeapi.co/api/v2/generation/1/");
+  setRedirect();
 }
 
 async function setSideBar() {
@@ -73,6 +74,7 @@ async function setSideBar() {
 }
 
 async function setPkmnList(url, id) {
+  console.log("list");
   let pkmnList = await fetch(url, config)
     .then(function (res) {
       return res.json();
@@ -100,6 +102,7 @@ async function setPkmnList(url, id) {
     name.innerHTML = element.name;
     name.alt = element.name;
     let id = element.url;
+    clone.querySelector(".sprite-container").id = id;
     url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     const pkmn = fetch(url, config)
       .then(function (res) {
@@ -117,7 +120,6 @@ async function setPkmnList(url, id) {
       .catch(function (err) {
         console.log(err);
       });
-
     pkmnListContainer.appendChild(clone);
   });
 }
@@ -208,4 +210,15 @@ function GetSortOrder(prop) {
     }
     return 0;
   };
+}
+
+function setRedirect() {
+  let card = document.querySelectorAll(".sprite-container");
+  card.forEach(function (element) {
+    if (window.location.href == "http://apidex/") {
+      element.addEventListener("click", function () {
+        window.location.href = "http://apidex/pokemon.html?id=" + element.id;
+      });
+    }
+  });
 }
