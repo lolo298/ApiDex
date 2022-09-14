@@ -5,7 +5,7 @@ headers.append("Access-Control-Allow-Origin", "*");
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-let config = {
+const config = {
   method: "GET",
   mode: "cors",
   headers: headers,
@@ -43,12 +43,6 @@ function setTheme() {
     icon.src = "./assets/img/sun.png";
   }
 }
-async function setup() {
-  setSideBar();
-  setTheme();
-  await setPkmnList("https://pokeapi.co/api/v2/generation/1/");
-  setRedirect();
-}
 
 async function setSideBar() {
   const gen = await fetch("https://pokeapi.co/api/v2/generation/", config)
@@ -73,55 +67,70 @@ async function setSideBar() {
   }
 }
 
-async function setPkmnList(url, id) {
+function setPkmnList(url, id) {
   console.log("list");
-  let pkmnList = await fetch(url, config)
-    .then(function (res) {
-      return res.json();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-  await delay(10);
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
   pkmnListContainer.innerHTML = "";
-  pkmnList.pokemon_species.forEach(function (element) {
-    let id = getIdFromUrl(element.url);
-    element.url = id;
-    element.url = parseInt(element.url);
-  });
-  pkmnList.pokemon_species.sort(function (a, b) {
-    return a.url - b.url;
-  });
-  pkmnList.pokemon_species.forEach(function (element) {
-    let clone = template.content.cloneNode(true);
-    let sprite = clone.querySelector(".sprite");
-    let name = clone.querySelector(".name");
-    name.innerHTML = element.name;
-    name.alt = element.name;
-    let id = element.url;
-    clone.querySelector(".sprite-container").id = id;
-    url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    const pkmn = fetch(url, config)
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (data) {
-        delay(10);
-        if (data.sprites.front_default != null) {
-          sprite.src = data.sprites.front_default;
-        } else {
-          sprite.src =
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
-        }
-      })
-      .catch(function (err) {
-        console.log(err);
+  console.log("Fetching data...");
+  fetch(url, config)
+    .then(function (res) {
+      return res.json();
+    })
+    .then(async function (data) {
+      let array = new Array();
+      for (let i = 0; i < data.pokemon_species.length; i++) {
+        let element = data.pokemon_species[i];
+        let id = getIdFromUrl(element.url);
+        array[id] = element.url.replace("pokemon-species", "pokemon");
+        element.url = id;
+        element.url = parseInt(element.url);
+
+        console.log("Fetched");
+      }
+      /*
+      data.pokemon_species.sort(function (a, b) {
+        return a.url - b.url;
       });
-    pkmnListContainer.appendChild(clone);
-  });
+      */
+      for (let i = 1; i < array.length; i++) {
+        let element = array[i];
+        let clone = template.content.cloneNode(true);
+        let sprite = clone.querySelector(".sprite");
+        let name = clone.querySelector(".name");
+
+        let id = i;
+        clone.querySelector(".sprite-container").id = id;
+        url = element;
+
+        await fetch(url, config)
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (data) {
+            name.innerHTML = data.species.name;
+            name.alt = data.species.name;
+            url = data.species.url;
+            console.log(data);
+
+            if (data.sprites.front_default != null) {
+              sprite.src = data.sprites.front_default;
+            } else {
+              sprite.src =
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
+            }
+
+            pkmnListContainer.appendChild(clone);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
 
 function getIdFromUrl(url) {
