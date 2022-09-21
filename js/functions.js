@@ -88,6 +88,7 @@ async function setSideBar() {
 }
 
 async function setPkmnList(id) {
+  spinner(true);
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
@@ -99,6 +100,8 @@ async function setPkmnList(id) {
       });
       */
   let array = species.data.gen_species;
+  let totalImage = array.length;
+  let loaded = 0;
   for (let i = 0; i < array.length; i++) {
     let element = array[i];
     let clone = template.content.cloneNode(true);
@@ -120,8 +123,16 @@ async function setPkmnList(id) {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
     }
 
+    sprite.addEventListener("load", function () {
+      loaded = loaded + 1;
+      if (loaded == totalImage) {
+        console.log("loaded");
+        spinner(false);
+      }
+    });
     pkmnListContainer.appendChild(clone);
   }
+
   setRedirect();
 }
 
@@ -204,4 +215,16 @@ function setRedirect() {
       });
     }
   });
+}
+
+function spinner(state) {
+  let spinner = document.querySelector(".spinner");
+  let main = document.querySelector(".pkmn-container");
+  if (state) {
+    main.style.visibility = "hidden";
+    spinner.style.display = "flex";
+  } else {
+    main.style.visibility = "";
+    spinner.style.display = "none";
+  }
 }
