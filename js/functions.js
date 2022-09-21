@@ -1,6 +1,5 @@
 let headers = new Headers();
 headers.append("Content-Type", "application/json");
-headers.append("Cache-Control", "max-age=31536000");
 //headers.append("X-Method-Used", "graphiql");
 //headers.append("Accept", "application/json");
 headers.append("Access-Control-Allow-Origin", "*");
@@ -19,7 +18,7 @@ function setConfig(query) {
     method: "POST",
     mode: "cors",
     headers: headers,
-    cache: "reload",
+    cache: "default",
     body: JSON.stringify({ query: query }),
   };
 }
@@ -43,16 +42,16 @@ function setTheme() {
   let icon = document.getElementById("theme-icon");
   let root = document.getElementById("root");
   let toggle = document.getElementById("themeSwitch");
-  if (sessionStorage.getItem("theme") == "dark") {
-    toggle.checked = true;
-    root.classList.add("dark-mode");
-    root.classList.remove("light-mode");
-    icon.src = "./assets/img/moon.png";
-  } else {
+  if (sessionStorage.getItem("theme") == "light") {
     toggle.checked = false;
-    root.classList.remove("dark-mode");
     root.classList.add("light-mode");
+    root.classList.remove("dark-mode");
     icon.src = "./assets/img/sun.png";
+  } else {
+    toggle.checked = true;
+    root.classList.remove("light-mode");
+    root.classList.add("dark-mode");
+    icon.src = "./assets/img/moon.png";
   }
 }
 
