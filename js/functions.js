@@ -1,16 +1,28 @@
 let headers = new Headers();
 headers.append("Content-Type", "application/json");
-headers.append("Accept", "application/json");
+headers.append("Cache-Control", "max-age=31536000");
+//headers.append("X-Method-Used", "graphiql");
+//headers.append("Accept", "application/json");
 headers.append("Access-Control-Allow-Origin", "*");
+let query = "";
+let config = {
+  method: "POST",
+  mode: "cors",
+  headers: headers,
+  cache: "default",
+};
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const config = {
-  method: "GET",
-  mode: "cors",
-  headers: headers,
-  cache: "reload",
-};
+function setConfig(query) {
+  config = {
+    method: "POST",
+    mode: "cors",
+    headers: headers,
+    cache: "reload",
+    body: JSON.stringify({ query: query }),
+  };
+}
 
 function theme(toggle) {
   let icon = document.getElementById("theme-icon");
@@ -45,98 +57,72 @@ function setTheme() {
 }
 
 async function setSideBar() {
-  const gen = await fetch("https://pokeapi.co/api/v2/generation/", config)
+  query = `query GetAllGeneration {
+    gen: pokemon_v2_generation{
+      name
+      id
+    }
+  }`;
+  setConfig(query);
+  let gen = await fetch("https://beta.pokeapi.co/graphql/v1beta", config)
     .then(function (res) {
       return res.json();
     })
     .catch(function (err) {
       console.log(err);
     });
-  await delay(10);
+  gen = gen.data.gen;
+
   let sidebar = document.querySelector(".sidebar").querySelector("nav");
-  for (let i = 0; i < gen.count; i++) {
-    let element = gen.results[i];
+  for (let i = 0; i < gen.length; i++) {
+    let element = gen[i];
     let a = document.createElement("a");
     a.href = `#${element.name}`;
     a.innerHTML = romanize(i + 1);
     a.addEventListener("click", function (e) {
       e.preventDefault();
-      setPkmnList(element.url, i + 1);
+      setPkmnList(i + 1);
     });
     sidebar.appendChild(a);
   }
 }
 
-function setPkmnList(url, id) {
-  console.log("list");
+async function setPkmnList(id) {
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
   pkmnListContainer.innerHTML = "";
-  console.log("Fetching data...");
-  fetch(url, config)
-    .then(function (res) {
-      return res.json();
-    })
-    .then(async function (data) {
-      let array = new Array();
-      for (let i = 0; i < data.pokemon_species.length; i++) {
-        let element = data.pokemon_species[i];
-        let id = getIdFromUrl(element.url);
-        array[id] = element.url.replace("pokemon-species", "pokemon");
-        element.url = id;
-        element.url = parseInt(element.url);
-
-        console.log("Fetched");
-      }
-      /*
+  const species = await getGenPkmn(id);
+  /*
       data.pokemon_species.sort(function (a, b) {
         return a.url - b.url;
       });
       */
-      for (let i = 1; i < array.length; i++) {
-        let element = array[i];
-        let clone = template.content.cloneNode(true);
-        let sprite = clone.querySelector(".sprite");
-        let name = clone.querySelector(".name");
+  let array = species.data.gen_species;
+  for (let i = 0; i < array.length; i++) {
+    let element = array[i];
+    let clone = template.content.cloneNode(true);
+    let sprite = clone.querySelector(".sprite");
+    let name = clone.querySelector(".name");
 
-        let id = i;
-        clone.querySelector(".sprite-container").id = id;
-        url = element;
+    let id = i + 1;
+    clone.querySelector(".sprite-container").id = id;
 
-        await fetch(url, config)
-          .then(function (res) {
-            return res.json();
-          })
-          .then(function (data) {
-            name.innerHTML = data.species.name;
-            name.alt = data.species.name;
-            url = data.species.url;
-            console.log(data);
+    name.innerHTML = element.name;
+    name.alt = element.name;
+    let sprites = JSON.parse(
+      element.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites
+    );
+    if (sprites.front_default != null) {
+      sprite.src = sprites.front_default;
+    } else {
+      sprite.src =
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
+    }
 
-            if (data.sprites.front_default != null) {
-              sprite.src = data.sprites.front_default;
-            } else {
-              sprite.src =
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png";
-            }
-
-            pkmnListContainer.appendChild(clone);
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-      }
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-}
-
-function getIdFromUrl(url) {
-  let tmp = url.replace("https://pokeapi.co/api/v2/", "");
-  let id = tmp.match(/(\d+)/)[0];
-  return id;
+    pkmnListContainer.appendChild(clone);
+  }
+  setRedirect();
 }
 
 function romanize(num) {
@@ -180,53 +166,41 @@ function romanize(num) {
   return Array(+digits.join("") + 1).join("M") + roman;
 }
 
-async function getPokedex(gen) {
-  await fetch(`https://pokeapi.co/api/v2/pokedex/${gen}`, config)
-    .then(function (res) {
-      return res.json();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-}
-
-async function getAllPkmn() {
-  await fetch("https://pokeapi.co/api/v2/pokemon/", config)
-    .then(function (res) {
-      return res.json();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-}
-
 async function getGenPkmn(gen) {
-  await fetch(`https://pokeapi.co/api/v2/generation/${gen}/`, config)
+  query = `query GetPokemonFromGeneration {
+    gen_species: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {id: {_eq: "${gen}"}}}, order_by: {id: asc}) {
+      name
+      id
+      pokemon_v2_pokemons {
+        pokemon_v2_pokemonsprites {
+          sprites
+        }
+      }
+    }
+  }
+  `;
+  setConfig(query);
+  let tmp = await fetch("https://beta.pokeapi.co/graphql/v1beta", config)
     .then(function (res) {
       return res.json();
     })
     .catch(function (err) {
       console.log(err);
     });
-}
-
-function GetSortOrder(prop) {
-  return function (a, b) {
-    if (a[prop] > b[prop]) {
-      return 1;
-    } else if (a[prop] < b[prop]) {
-      return -1;
-    }
-    return 0;
-  };
+  return tmp;
 }
 
 function setRedirect() {
   let card = document.querySelectorAll(".sprite-container");
   card.forEach(function (element) {
-    if (window.location.href == "http://apidex/") {
+    if (
+      window.location.href == "http://apidex/" ||
+      window.location.href == "http://127.0.0.1:5500/" ||
+      window.location.href == "https://lolo298.github.io/ApiDex/"
+    ) {
       element.addEventListener("click", function () {
-        window.location.href = "http://apidex/pokemon.html?id=" + element.id;
+        window.location.href =
+          window.location.href + "/pokemon.html?id=" + element.id;
       });
     }
   });

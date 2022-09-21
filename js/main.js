@@ -9,5 +9,4 @@ if ("serviceWorker" in navigator) {
 
 setSideBar();
 setTheme();
-setPkmnList("https://pokeapi.co/api/v2/generation/1/");
-setRedirect();
+setPkmnList(1);
