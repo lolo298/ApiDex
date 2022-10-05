@@ -63,7 +63,7 @@ body {
 
 .sprite-container .sprite {
     width: 80%;
-    height: 80%;
+    height: auto;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
