@@ -13,65 +13,14 @@ let config = {
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function setConfig(query) {
-  config = {
-    method: "POST",
-    mode: "cors",
-    headers: headers,
-    cache: "default",
-    body: JSON.stringify({ query: query }),
-  };
-}
-
-function theme(toggle) {
-  let icon = document.getElementById("theme-icon");
-  let root = document.getElementById("root");
-  if (toggle.checked) {
-    icon.src = "./assets/img/moon.png";
-    root.classList.add("dark-mode");
-    root.classList.remove("light-mode");
-    sessionStorage.setItem("theme", "dark");
-  } else {
-    icon.src = "./assets/img/sun.png";
-    root.classList.remove("dark-mode");
-    root.classList.add("light-mode");
-    sessionStorage.setItem("theme", "light");
-  }
-}
-function setTheme() {
-  let icon = document.getElementById("theme-icon");
-  let root = document.getElementById("root");
-  let toggle = document.getElementById("themeSwitch");
-  if (sessionStorage.getItem("theme") == "light") {
-    toggle.checked = false;
-    root.classList.add("light-mode");
-    root.classList.remove("dark-mode");
-    icon.src = "./assets/img/sun.png";
-  } else {
-    toggle.checked = true;
-    root.classList.remove("light-mode");
-    root.classList.add("dark-mode");
-    icon.src = "./assets/img/moon.png";
-  }
-}
-
 async function setSideBar() {
   query = `query GetAllGeneration {
-    gen: pokemon_v2_generation{
+    gens: pokemon_v2_generation{
       name
       id
     }
   }`;
-  setConfig(query);
-  let gen = await fetch("https://beta.pokeapi.co/graphql/v1beta", config)
-    .then(function (res) {
-      return res.json();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-  gen = gen.data.gen;
-
+  let gen = (await fetchQuery(query)).gens;
   let sidebar = document.querySelector(".sidebar").querySelector("nav");
   for (let i = 0; i < gen.length; i++) {
     let element = gen[i];
@@ -87,22 +36,17 @@ async function setSideBar() {
 }
 
 async function setPkmnList(id) {
-  spinner(true);
+  spinner();
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
   pkmnListContainer.innerHTML = "";
-  const species = await getGenPkmn(id);
-  /*
-      data.pokemon_species.sort(function (a, b) {
-        return a.url - b.url;
-      });
-      */
-  let array = species.data.gen_species;
-  let totalImage = array.length;
+  const species = (await getGenPkmn(id)).genSpecies;
+
+  let totalImage = species.length;
   let loaded = 0;
-  for (let i = 0; i < array.length; i++) {
-    let element = array[i];
+  for (let i = 0; i < species.length; i++) {
+    let element = species[i];
     let clone = template.content.cloneNode(true);
     let sprite = clone.querySelector(".sprite");
     let name = clone.querySelector(".name");
@@ -126,7 +70,7 @@ async function setPkmnList(id) {
       loaded = loaded + 1;
       if (loaded == totalImage) {
         console.log("loaded");
-        spinner(false);
+        spinner();
       }
     });
     pkmnListContainer.appendChild(clone);
@@ -177,8 +121,8 @@ function romanize(num) {
 }
 
 async function getGenPkmn(gen) {
-  query = `query GetPokemonFromGeneration {
-    gen_species: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {id: {_eq: "${gen}"}}}, order_by: {id: asc}) {
+  query = `query GetPokemonFromGeneration($id: Int!) {
+    genSpecies: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {id: {_eq: $id}}}, order_by: {id: asc}) {
       name
       id
       pokemon_v2_pokemons {
@@ -189,41 +133,16 @@ async function getGenPkmn(gen) {
     }
   }
   `;
-  setConfig(query);
-  let tmp = await fetch("https://beta.pokeapi.co/graphql/v1beta", config)
-    .then(function (res) {
-      return res.json();
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
-  return tmp;
+  let variables = `{"id": ${gen}}`;
+  return fetchQuery(query, variables);
 }
 
 function setRedirect() {
   let card = document.querySelectorAll(".sprite-container");
   card.forEach(function (element) {
-    if (
-      window.location.href == "http://apidex/" ||
-      window.location.href == "http://127.0.0.1:5500/" ||
-      window.location.href == "https://lolo298.github.io/ApiDex/"
-    ) {
-      element.addEventListener("click", function () {
-        window.location.href =
-          window.location.href + "/pokemon.html?id=" + element.id;
-      });
-    }
+    element.addEventListener("click", function () {
+      window.location.href =
+        window.location.href + "pokemons/?id=" + element.id;
+    });
   });
-}
-
-function spinner(state) {
-  let spinner = document.querySelector(".spinner");
-  let main = document.querySelector(".pkmn-container");
-  if (state) {
-    main.style.visibility = "hidden";
-    spinner.style.display = "flex";
-  } else {
-    main.style.visibility = "";
-    spinner.style.display = "none";
-  }
 }

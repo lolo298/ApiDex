@@ -11,6 +11,16 @@ header {
     justify-content: space-between;
     align-items: stretch;
     z-index: 50;
+    align-self: end;
+    width: 99vw;
+}
+
+#main {
+    width: max-content;
+}
+
+#apidex {
+    cursor: pointer;
 }
 
 header>h1 {
@@ -39,13 +49,13 @@ header>h1 {
 
 .light-mode .main-navbar a:hover {
     background-color: rgb(189, 189, 189);
-    transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
 
 
 .dark-mode .main-navbar a:hover {
     background-color: rgb(121, 121, 121);
-    transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .header.sep {

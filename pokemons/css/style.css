@@ -1,0 +1,195 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.light-mode {
+    background-color: var(--light-primary);
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.light-mode * {
+    background-color: transparent;
+    color: var(--light-text);
+
+}
+
+.dark-mode {
+    background-color: var(--dark-primary);
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.dark-mode * {
+    background-color: transparent;
+    color: var(--dark-text);
+
+}
+
+.dark-mode .spinner {
+    background-color: var(--dark-primary);
+}
+
+.light-mode .spinner {
+    background-color: var(--light-primary);
+}
+
+.main-content {
+    display: flex;
+}
+
+.void {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#sprite {
+    width: 25vw;
+    height: auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#types {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+#name {
+    text-align: center;
+}
+
+.type {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    padding: 1vh 1vw;
+    border-radius: 20px;
+}
+
+#typeIcon {
+    height: 1.3em;
+}
+
+p {
+    font-size: 1.25em;
+    margin: 0;
+}
+
+.pkmn-container {
+    width: 100%;
+    margin: 2%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.spinner {
+    background-color: var(--dark-primary);
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.loader {
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bug {
+    background-color: var(--bug);
+}
+
+.dark {
+    background-color: var(--dark);
+}
+
+.dragon {
+    background-color: var(--dragon);
+}
+
+.electric {
+    background-color: var(--electric);
+}
+
+.fairy {
+    background-color: var(--fairy);
+}
+
+.fighting {
+    background-color: var(--fighting);
+}
+
+.fire {
+    background-color: var(--fire);
+}
+
+.flying {
+    background-color: var(--flying);
+}
+
+.ghost {
+    background-color: var(--ghost);
+}
+
+.grass {
+    background-color: var(--grass);
+}
+
+.ground {
+    background-color: var(--ground);
+}
+
+.ice {
+    background-color: var(--ice);
+}
+
+.normal {
+    background-color: var(--normal);
+}
+
+.poison {
+    background-color: var(--poison);
+}
+
+.psychic {
+    background-color: var(--psychic);
+}
+
+.rock {
+    background-color: var(--rock);
+}
+
+.steel {
+    background-color: var(--steel);
+}
+
+.water {
+    background-color: var(--water);
+}
