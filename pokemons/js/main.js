@@ -13,6 +13,8 @@ let config = {
 
 window.onload = async () => {
   spinner();
+
+  // Make all the necessary requests
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   query = `query GetPokemonById($id: Int!) {
@@ -31,9 +33,10 @@ window.onload = async () => {
       is_baby
       is_legendary
       is_mythical
-      pokemon_v2_evolutionchain {
-        pokemon_v2_pokemonspecies {
+      chain: pokemon_v2_evolutionchain {
+        specie: pokemon_v2_pokemonspecies {
           name
+          id
         }
       }
     }
@@ -42,19 +45,37 @@ window.onload = async () => {
         name
       }
     }
-    Sprite: pokemon_v2_pokemonsprites(where: {pokemon_id: {_eq: $id}}) {
-      sprites
-    }
   }`;
   let variables = `{"id": ${id}}`;
   const data = await fetchQuery(query, variables);
-  let sprites = JSON.parse(data.Sprite[0].sprites);
+  let chain = data.Pokemon[0].chain.specie;
+  let queryData = (queryParam = variablesParam = "");
+  variables = `{`;
+  chain.forEach((element) => {
+    queryData += `
+      ${element.name}: pokemon_v2_pokemonsprites(where: {pokemon_id: {_eq: $id${element.id}}}) {
+        sprites
+      }
+    `;
+    variablesParam += `,"id${element.id}": ${element.id} `;
+    queryParam += `$id${element.id}: Int! `;
+  });
+  query = `query GetPokemonsSprites(` + queryParam + `) {` + queryData + `}`;
+  variablesParam = variablesParam.slice(1);
+  variables = `{` + variablesParam + `}`;
+  const sprites = await fetchQuery(query, variables);
   let pokemon = data.Pokemon[0];
+  const currentSprites = JSON.parse(sprites[pokemon.name][0].sprites);
   let types = data.Type;
+
+  // get the html elements
   let img = document.querySelector("#sprite");
   let name = document.querySelector("#name");
+  let docChain = document.querySelector("#chain");
+
+  //set initial data
   name.innerHTML = pokemon.name;
-  img.src = sprites.other["official-artwork"].front_default;
+  img.src = currentSprites.other["official-artwork"].front_default;
   img.alt = pokemon.name;
   let divTypes = document.querySelector("#types");
   types.forEach(async (type) => {
@@ -70,6 +91,20 @@ window.onload = async () => {
     span.appendChild(image);
     span.appendChild(name);
     divTypes.appendChild(span);
+  });
+
+  //set the evolution chain
+  console.log(chain);
+  let template = document.getElementsByTagName("template")[0];
+  chain.forEach((element) => {
+    let clone = template.content.cloneNode(true);
+    clone.querySelector(".name").innerHTML = element.name;
+    clone.querySelector(".sprite").src = JSON.parse(
+      sprites[element.name][0].sprites
+    ).other["official-artwork"].front_default;
+    clone.querySelector(".sprite").alt = element.name;
+
+    docChain.appendChild(clone);
   });
   spinner();
 };
