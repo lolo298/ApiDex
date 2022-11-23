@@ -68,7 +68,7 @@ function setTheme() {
  * @param {string} query - the graphql query with the format `query queryName{ ... }`
  * @param {object} variables - the variables to use in the query with format "{ varName: value }"
  */
-function fetchQuery(query, variables = "") {
+async function fetchQuery(query, variables = "") {
   const controller = new AbortController();
   const signal = controller.signal;
   if (variables == "") {
@@ -92,18 +92,14 @@ function fetchQuery(query, variables = "") {
     };
   }
   let request = fetch("https://beta.pokeapi.co/graphql/v1beta", config);
-  let result = timeout(10000, request)
-    .catch(async (err) => {
-      controller.abort();
-      let res = await fetchOldQuery(query, variables);
-      return res;
-    })
-    .then((data) => {
-      result = JSON.parse(data);
-      result = result.data;
-      console.log(result);
-      return result;
-    });
+  let result = await timeout(10000, request).catch(async (err) => {
+    controller.abort();
+    let res = await fetchOldQuery(query, variables);
+    return res;
+  });
+  console.log(result);
+  result = result.data;
+  return result;
 }
 
 function timeout(ms, promise) {
