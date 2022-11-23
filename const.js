@@ -68,7 +68,9 @@ function setTheme() {
  * @param {string} query - the graphql query with the format `query queryName{ ... }`
  * @param {object} variables - the variables to use in the query with format "{ varName: value }"
  */
-async function fetchQuery(query, variables = "") {
+function fetchQuery(query, variables = "") {
+  const controller = new AbortController();
+  const signal = controller.signal;
   if (variables == "") {
     config = {
       method: "POST",
@@ -76,6 +78,7 @@ async function fetchQuery(query, variables = "") {
       headers: headers,
       cache: "default",
       body: JSON.stringify({ query }),
+      signal: signal,
     };
   } else {
     variables = JSON.parse(variables);
@@ -85,19 +88,38 @@ async function fetchQuery(query, variables = "") {
       headers: headers,
       cache: "default",
       body: JSON.stringify({ query, variables }),
+      signal: signal,
     };
   }
-
-  let result = await fetch("https://beta.pokeapi.co/graphql/v1beta", config)
-    .then((res) => {
-      return res.json();
+  let request = fetch("https://beta.pokeapi.co/graphql/v1beta", config);
+  let result = timeout(10000, request)
+    .catch(async (err) => {
+      controller.abort();
+      let res = await fetchOldQuery(query, variables);
+      return res;
     })
     .then((data) => {
-      let result = data.data;
+      result = JSON.parse(data);
+      result = result.data;
+      console.log(result);
       return result;
-    })
-    .catch((err) => {
-      console.error(err);
     });
-  return result;
+}
+
+function timeout(ms, promise) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error("TIMEOUT"));
+    }, ms);
+
+    promise
+      .then((value) => {
+        clearTimeout(timer);
+        resolve(value);
+      })
+      .catch((reason) => {
+        clearTimeout(timer);
+        reject(reason);
+      });
+  });
 }

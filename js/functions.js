@@ -14,13 +14,9 @@ let config = {
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function setSideBar() {
-  query = `query GetAllGeneration {
-    gens: pokemon_v2_generation{
-      name
-      id
-    }
-  }`;
-  let gen = (await fetchQuery(query)).gens;
+  query = "query GetAllGeneration {gens: pokemon_v2_generation{name id}}";
+  let gen = await fetchQuery(query).gens;
+  console.log("gen", gen);
   let sidebar = document.querySelector(".sidebar").querySelector("nav");
   for (let i = 0; i < gen.length; i++) {
     let element = gen[i];
@@ -41,7 +37,7 @@ async function setPkmnList(id) {
   let template = document.getElementsByTagName("template")[0];
 
   pkmnListContainer.innerHTML = "";
-  const species = (await getGenPkmn(id)).genSpecies;
+  const species = await getGenPkmn(id).genSpecies;
 
   let totalImage = species.length;
   let loaded = 0;
@@ -121,19 +117,11 @@ function romanize(num) {
 }
 
 async function getGenPkmn(gen) {
-  query = `query GetPokemonFromGeneration($id: Int!) {
-    genSpecies: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {id: {_eq: $id}}}, order_by: {id: asc}) {
-      name
-      id
-      pokemon_v2_pokemons {
-        pokemon_v2_pokemonsprites {
-          sprites
-        }
-      }
-    }
-  }
-  `;
-  let variables = `{"id": ${gen}}`;
+  query =
+    "query GetPokemonFromGeneration($id: Int!) {genSpecies: pokemon_v2_pokemonspecies(where: {pokemon_v2_generation: {id: {_eq: $id}}}, order_by: {id: asc}) {name id pokemon_v2_pokemons {pokemon_v2_pokemonsprites {sprites}}}}";
+  let variables = '{"id": ' + gen + "}";
+  console.log("var: ", variables);
+  console.log("var: ", typeof variables);
   return fetchQuery(query, variables);
 }
 
