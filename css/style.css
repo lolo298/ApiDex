@@ -107,7 +107,8 @@ body {
     width: 100%;
     margin: 2%;
     display: none;
-    flex-flow: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
     animation: wraping 5s ease-in-out;

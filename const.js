@@ -97,7 +97,7 @@ async function fetchQuery(query, variables = "") {
     let res = await fetchOldQuery(query, variables);
     return res;
   });
-  console.log(result);
+  result = await result.json();
   result = result.data;
   return result;
 }
