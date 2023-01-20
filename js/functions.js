@@ -41,13 +41,15 @@ async function setPkmnList(id) {
 
   pkmnListContainer.innerHTML = "";
   const species = (await getGenPkmn(id)).genSpecies;
+  console.log("species: ",species);
   let totalImage = species.length;
   for (let [i, element] of Object.entries(species)) {
+    console.log("element: ",element);
     let clone = template.content.cloneNode(true);
     let sprite = clone.querySelector(".sprite");
     let name = clone.querySelector(".name");
 
-    let id = i + 1;
+    let id = element.id;
     clone.querySelector(".sprite-container").id = id;
     clone.querySelector(".sprite-container").style.order = id;
     name.innerHTML = element.name;
@@ -60,6 +62,7 @@ async function setPkmnList(id) {
     }
 
     sprite.addEventListener("load", loadingImage);
+    console.log("clone: ",clone)
     pkmnListContainer.appendChild(clone);
   }
 

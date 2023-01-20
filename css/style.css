@@ -90,6 +90,7 @@ body {
 }
 
 .sprite-container .name {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,7 +112,6 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    animation: wraping 5s ease-in-out;
 }
 
 .spinner {
@@ -134,15 +134,5 @@ body {
 
     100% {
         transform: rotate(360deg);
-    }
-}
-
-@keyframes wraping {
-    0% {
-        flex-wrap: wrap;
-    }
-
-    100% {
-        flex-wrap: wrap-reverse;
     }
 }
