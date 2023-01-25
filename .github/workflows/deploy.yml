@@ -3,11 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches: 
-      - main
-    types: [closed]
+      - master
   workflow_dispatch:
     inputs:
       environment:
