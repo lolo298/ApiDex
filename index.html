@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/var.css" />
+    <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/switch.css" />
     <link rel="stylesheet" href="css/navbar.css" />
@@ -14,14 +15,8 @@
     <!-- ios support -->
     <link rel="apple-touch-icon" href="assets/icons/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="assets/icons/favicon-32x32.png" />
-    <link
-      rel="apple-touch-icon"
-      href="assets/icons/android-chrome-192x192.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="assets/icons/android-chrome-512x512.png"
-    />
+    <link rel="apple-touch-icon" href="assets/icons/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" href="assets/icons/android-chrome-512x512.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
     <meta name="theme-color" content="#db4938" />
 
@@ -33,8 +28,8 @@
       <header id="main">
         <div class="void"></div>
         <nav class="main-navbar">
-          <a href="#">Pokemons</a>
-          <a href="#">Moves</a>
+          <a href="#" class="activePage">Pokemons</a>
+          <a href="./Moves">Moves</a>
           <a href="#">Locations</a>
           <a href="#">Items</a>
           <a href="#">CT/CS</a>
@@ -43,12 +38,7 @@
           <div class="sep"></div>
           <div class="toggle">
             <label class="switch" for="themeSwitch">
-              <input
-                type="checkbox"
-                onclick="theme(this)"
-                id="themeSwitch"
-                checked
-              />
+              <input type="checkbox" onclick="theme(this)" id="themeSwitch" checked />
               <span class="slider round"></span>
             </label>
           </div>
@@ -61,7 +51,7 @@
       <div class="main-content">
         <div class="sideSep">
           <div class="sidebar">
-            <h1 id="apidex">ApiDex</h1>
+            <h1 id="apidex" onclick="window.location.href='index.html'">ApiDex</h1>
             <nav></nav>
           </div>
         </div>
@@ -82,6 +72,7 @@
       </div>
     </div>
     <script src="const.js"></script>
+    <script src="js/old.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/main.js"></script>
   </body>

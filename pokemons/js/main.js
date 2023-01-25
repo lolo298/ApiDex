@@ -11,8 +11,10 @@ let config = {
   cache: "default",
 };
 
+let spin = ".pkmn-container";
+
 window.onload = async () => {
-  spinner();
+  spinner(spin);
 
   // Make all the necessary requests
   const urlParams = new URLSearchParams(window.location.search);
@@ -106,5 +108,5 @@ window.onload = async () => {
 
     docChain.appendChild(clone);
   });
-  spinner();
+  spinner(spin);
 };

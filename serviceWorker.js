@@ -1,4 +1,4 @@
-const ApiDex = "api-dex-v1";
+/*const ApiDex = "api-dex-v1";
 const assets = [
   "/",
   "/index.html",
@@ -28,4 +28,4 @@ self.addEventListener("fetch", (fetchEvent) => {
       return res || fetch(fetchEvent.request);
     })
   );
-});
+});*/

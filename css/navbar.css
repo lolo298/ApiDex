@@ -15,10 +15,6 @@ header {
     width: 99vw;
 }
 
-#main {
-    width: max-content;
-}
-
 #apidex {
     cursor: pointer;
 }
@@ -47,6 +43,14 @@ header>h1 {
     transition: all 0.2s;
 }
 
+.light-mode .activePage{
+    background-color: rgb(189, 189, 189);
+}
+
+.dark-mode .activePage{
+    background-color: rgb(121, 121, 121);
+}
+
 .light-mode .main-navbar a:hover {
     background-color: rgb(189, 189, 189);
     transition: background-color 0.2s ease-in-out;
@@ -70,5 +74,5 @@ header>h1 {
 #theme-icon {
     width: 3vh;
     height: 3vh;
-    margin-right: 2vh;
+    margin: 0 2vh;
 }

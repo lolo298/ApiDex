@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/var.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="css/moves.css" />
+    <link rel="stylesheet" href="/css/switch.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="/assets/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/android-chrome-512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+    <meta name="theme-color" content="#db4938" />
+
+    <title>ApiDex</title>
+  </head>
+
+  <body>
+    <div id="root" class="light-mode">
+      <header id="main">
+        <h1 id="apidex" onclick="window.location.href='/index.html'">ApiDex</h1>
+        <div class="void"></div>
+        <nav class="main-navbar">
+          <a href="/">Pokemons</a>
+          <a href="/Moves" class="activePage">Moves</a>
+          <a href="#">Locations</a>
+          <a href="#">Items</a>
+          <a href="#">CT/CS</a>
+          <a href="#">Contests</a>
+          <a href="#">Berries</a>
+          <div class="sep"></div>
+          <div class="toggle">
+            <label class="switch" for="themeSwitch">
+              <input type="checkbox" onclick="theme(this)" id="themeSwitch" checked />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <img src="/assets/img/sun.png" alt="sun" id="theme-icon" />
+        </nav>
+      </header>
+      <div class="spinner">
+        <img class="loader" src="/assets/spinner.svg" />
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th height="50px">Name</th>
+            <th height="50px">Type</th>
+            <th height="50px">Power</th>
+            <th height="50px">Accuracy</th>
+            <th height="50px">PP</th>
+            <th height="50px">Effect</th>
+          </tr>
+        </thead>
+        <tbody id="moves">
+            <tr id="move1" class="move-container">
+                <td class="name">Trempette</td>
+                <td class="type"><img src="/assets/icons/types/water.svg" class="types"/>Eau</td>
+                <td class="power">50</td>
+                <td class="accuracy">100</td>
+                <td class="pp">20</td>
+                <td class="eftdfect">Lance une vague deau qui peut paralyser l'ennemi.</td>
+            </tr>
+            <tr id="move2" class="move-container">
+                <td class="name">Trempette</td>
+                <td class="type"><img src="/assets/icons/types/water.svg" class="types"/>Eau</td>
+                <td class="power">50</td>
+                <td class="accuracy">100</td>
+                <td class="pp">20</td>
+                <td class="effect">Lance une vague deau qui peut paralyser l'ennemi.</td>
+            </tr>
+        </tbody>
+      </table>
+
+<!--        <div class="moves-container">
+            <div id="move1" class="move-container">
+                <div class="name">Trempette</div>
+                <div class="type"><img src="/assets/icons/types/water.svg" class="types"/>Eau</div>
+                <div class="power">50</div>
+                <div class="accuracy">100</div>
+                <div class="pp">20</div>
+                <div class="effect">Lance une vague deau qui peut paralyser l'ennemi.</div>
+            </div>
+            <div id="move2" class="move-container">
+                <div class="name">Trempette</div>
+                <div class="type"><img src="/assets/icons/types/water.svg" class="types"/>Eau</div>
+                <div class="power">50</div>
+                <div class="accuracy">100</div>
+                <div class="pp">20</div>
+                <div class="effect">Lance une vague deau qui peut paralyser l'ennemi.</div>
+            </div>
+        </div>-->
+
+      </div>
+    </div>
+    <script src="/const.js"></script>
+    <script src="/js/old.js"></script>
+    <script src="/js/functions.js"></script>
+    <script src="/js/moves.js"></script>
+  </body>
+</html>
