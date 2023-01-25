@@ -87,7 +87,7 @@ window.onload = async () => {
     name.innerHTML = type.pokemon_v2_type.name;
     span.classList.add(type.pokemon_v2_type.name);
     let image = document.createElement("img");
-    image.src = `../assets/icons/types/${type.pokemon_v2_type.name}.svg`;
+    image.src = `assets/icons/types/${type.pokemon_v2_type.name}.svg`;
     image.alt = type.pokemon_v2_type.name;
     image.id = "typeIcon";
     span.appendChild(image);
@@ -101,9 +101,9 @@ window.onload = async () => {
   chain.forEach((element) => {
     let clone = template.content.cloneNode(true);
     clone.querySelector(".name").innerHTML = element.name;
-    clone.querySelector(".sprite").src = JSON.parse(
-      sprites[element.name][0].sprites
-    ).other["official-artwork"].front_default;
+    clone.querySelector(".sprite").src = JSON.parse(sprites[element.name][0].sprites).other[
+      "official-artwork"
+    ].front_default;
     clone.querySelector(".sprite").alt = element.name;
 
     docChain.appendChild(clone);
