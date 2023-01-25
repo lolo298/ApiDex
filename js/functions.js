@@ -35,7 +35,7 @@ async function setSideBar() {
 }
 
 async function setPkmnList(id) {
-  spinner();
+  spinner(spin);
   let pkmnListContainer = document.querySelector(".pkmn-container");
   let template = document.getElementsByTagName("template")[0];
 
@@ -75,7 +75,7 @@ function loadingImage(e) {
     document.querySelectorAll(".sprite").forEach((element) => {
       element.removeEventListener("load", loadingImage);
     });
-    spinner();
+    spinner(spin);
   }
 }
 
