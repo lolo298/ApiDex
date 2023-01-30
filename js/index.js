@@ -140,7 +140,12 @@ function setRedirect() {
 
   regex = /\/[a-z]+\.html/;
   newurl = oldurl.replace(regex, "");
-  newurl = newurl.at(-1) == "/" ? newurl + "pokemon/?id=" : newurl + "/pokemon/?id=";
+  newurl =
+    newurl.at(-1) == "/"
+      ? newurl + "pokemon/?id="
+      : newurl.at(-1) == "#"
+      ? newurl.substring(0, newurl.length - 1) + "pokemon/?id="
+      : newurl + "/pokemon/?id=";
   let card = document.querySelectorAll(".sprite-container");
   card.forEach(function (element) {
     element.addEventListener("click", function () {
