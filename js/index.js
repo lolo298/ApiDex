@@ -137,8 +137,9 @@ async function getGenPkmn(gen) {
 
 function setRedirect() {
   oldurl = window.location.href;
-  regex = /\/[a-z]+\.html/;
-  newurl = oldurl.replace(regex, "/pokemon.html?id=");
+  //regex = /\/[a-z]+\.html/;
+  //newurl = oldurl.replace(regex, "/pokemon/?id=");
+  newurl = oldurl.at(-1) == "/" ? oldurl + "pokemon/?id=" : oldurl + "/pokemon/?id=";
   let card = document.querySelectorAll(".sprite-container");
   card.forEach(function (element) {
     element.addEventListener("click", function () {
