@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="/apidex/">
+    <script type="text/javascript">
+      if (document.location.host == "lorenzoa.dev") {
+        document.write("<base href='https://" + document.location.host + "/apidex/' />");
+      } else {
+        document.write("<base href='http://" + document.location.host + "' />");
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,14 +20,8 @@
     <!-- ios support -->
     <link rel="apple-touch-icon" href="assets/icons/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="assets/icons/favicon-32x32.png" />
-    <link
-      rel="apple-touch-icon"
-      href="assets/icons/android-chrome-192x192.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="assets/icons/android-chrome-512x512.png"
-    />
+    <link rel="apple-touch-icon" href="assets/icons/android-chrome-192x192.png" />
+    <link rel="apple-touch-icon" href="assets/icons/android-chrome-512x512.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
     <meta name="theme-color" content="#db4938" />
     <title></title>
@@ -41,12 +41,7 @@
           <div class="sep"></div>
           <div class="toggle">
             <label class="switch" for="themeSwitch">
-              <input
-                type="checkbox"
-                onclick="theme(this)"
-                id="themeSwitch"
-                checked
-              />
+              <input type="checkbox" onclick="theme(this)" id="themeSwitch" checked />
               <span class="slider round"></span>
             </label>
           </div>

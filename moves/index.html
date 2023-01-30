@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="/apidex/">
+    <script type="text/javascript">
+      if (document.location.host == "lorenzoa.dev") {
+        document.write("<base href='https://" + document.location.host + "/apidex/' />");
+      } else {
+        document.write("<base href='http://" + document.location.host + "' />");
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -61,26 +67,26 @@
           </tr>
         </thead>
         <tbody id="moves">
-            <tr id="move1" class="move-container">
-                <td class="name">Trempette</td>
-                <td class="type"><img src="assets/icons/types/water.svg" class="types"/>Eau</td>
-                <td class="power">50</td>
-                <td class="accuracy">100</td>
-                <td class="pp">20</td>
-                <td class="eftdfect">Lance une vague deau qui peut paralyser l'ennemi.</td>
-            </tr>
-            <tr id="move2" class="move-container">
-                <td class="name">Trempette</td>
-                <td class="type"><img src="assets/icons/types/water.svg" class="types"/>Eau</td>
-                <td class="power">50</td>
-                <td class="accuracy">100</td>
-                <td class="pp">20</td>
-                <td class="effect">Lance une vague deau qui peut paralyser l'ennemi.</td>
-            </tr>
+          <tr id="move1" class="move-container">
+            <td class="name">Trempette</td>
+            <td class="type"><img src="assets/icons/types/water.svg" class="types" />Eau</td>
+            <td class="power">50</td>
+            <td class="accuracy">100</td>
+            <td class="pp">20</td>
+            <td class="eftdfect">Lance une vague deau qui peut paralyser l'ennemi.</td>
+          </tr>
+          <tr id="move2" class="move-container">
+            <td class="name">Trempette</td>
+            <td class="type"><img src="assets/icons/types/water.svg" class="types" />Eau</td>
+            <td class="power">50</td>
+            <td class="accuracy">100</td>
+            <td class="pp">20</td>
+            <td class="effect">Lance une vague deau qui peut paralyser l'ennemi.</td>
+          </tr>
         </tbody>
       </table>
 
-<!--        <div class="moves-container">
+      <!--        <div class="moves-container">
             <div id="move1" class="move-container">
                 <div class="name">Trempette</div>
                 <div class="type"><img src="/assets/icons/types/water.svg" class="types"/>Eau</div>
@@ -98,8 +104,6 @@
                 <div class="effect">Lance une vague deau qui peut paralyser l'ennemi.</div>
             </div>
         </div>-->
-
-      </div>
     </div>
     <script src="js/const.js"></script>
     <script src="js/old.js"></script>

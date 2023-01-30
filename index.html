@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="/apidex/">
+    <script type="text/javascript">
+      if (document.location.host == "lorenzoa.dev") {
+        document.write("<base href='https://" + document.location.host + "/apidex/' />");
+      } else {
+        document.write("<base href='http://" + document.location.host + "' />");
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
