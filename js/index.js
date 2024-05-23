@@ -63,7 +63,7 @@ async function setPkmnList(id) {
     clone.querySelector(".sprite-container").style.order = id;
     name.innerHTML = element.name;
     name.alt = element.name;
-    let sprites = JSON.parse(element.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites);
+    let sprites = element.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites;
     if (sprites.front_default != null) {
       sprite.src = sprites.front_default;
     } else {
