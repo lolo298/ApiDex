@@ -67,7 +67,7 @@ window.onload = async () => {
   variables = `{` + variablesParam + `}`;
   const sprites = await fetchQuery(query, variables);
   let pokemon = data.Pokemon[0];
-  const currentSprites = JSON.parse(sprites[pokemon.name][0].sprites);
+  const currentSprites = sprites[pokemon.name][0].sprites;
   let types = data.Type;
 
   // get the html elements
@@ -101,7 +101,7 @@ window.onload = async () => {
   chain.forEach((element) => {
     let clone = template.content.cloneNode(true);
     clone.querySelector(".name").innerHTML = element.name;
-    clone.querySelector(".sprite").src = JSON.parse(sprites[element.name][0].sprites).other[
+    clone.querySelector(".sprite").src = sprites[element.name][0].sprites.other[
       "official-artwork"
     ].front_default;
     clone.querySelector(".sprite").alt = element.name;
