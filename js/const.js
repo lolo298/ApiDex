@@ -31,12 +31,12 @@ function theme(toggle) {
   let icon = document.getElementById("theme-icon");
   let root = document.getElementById("root");
   if (toggle.checked) {
-    icon.src = "assets/img/moon.png";
+    icon.src = "/assets/img/moon.png";
     root.classList.add("dark-mode");
     root.classList.remove("light-mode");
     sessionStorage.setItem("theme", "dark");
   } else {
-    icon.src = "assets/img/sun.png";
+    icon.src = "/assets/img/sun.png";
     root.classList.remove("dark-mode");
     root.classList.add("light-mode");
     sessionStorage.setItem("theme", "light");
@@ -53,12 +53,12 @@ function setTheme() {
     toggle.checked = false;
     root.classList.add("light-mode");
     root.classList.remove("dark-mode");
-    icon.src = "assets/img/sun.png";
+    icon.src = "/assets/img/sun.png";
   } else {
     toggle.checked = true;
     root.classList.remove("light-mode");
     root.classList.add("dark-mode");
-    icon.src = "assets/img/moon.png";
+    icon.src = "/assets/img/moon.png";
   }
 }
 
